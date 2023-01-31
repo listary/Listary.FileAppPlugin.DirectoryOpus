@@ -1,0 +1,10 @@
+﻿FindWindow
+FindWindowEx
+GetClassName
+GetGUIThreadInfo
+GetParent
+GetWindowText
+GetWindowTextLength
+GetWindowThreadProcessId
+SendMessage
+WM_GETTEXT

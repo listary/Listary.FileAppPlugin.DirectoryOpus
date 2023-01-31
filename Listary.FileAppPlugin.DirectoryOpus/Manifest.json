@@ -1,0 +1,20 @@
+﻿{
+  "ManifestVersion": 1,
+
+  "Id": "DirectoryOpus",
+  "PluginVersion": "0.1.0",
+  "DisplayName": "Directory Opus",
+  "Authors": [ "Listary" ],
+  "Description": "Listary file application plugin for Directory Opus",
+  "Homepage": "https://github.com/Chaoses-Ib/Listary.FileAppPlugin.DirectoryOpus",
+  "Icon": "icon.png",
+
+  "Api": "NetFx",
+  "ApiVersion": 1,
+  "Entry": "Listary.FileAppPlugin.DirectoryOpus.dll",
+  "Features": {
+    "IFileAppPlugin": [],
+    "IFileWindow": [],
+    "IFileTab": [ "IGetFolder", "IOpenFolder" ]
+  }
+}
