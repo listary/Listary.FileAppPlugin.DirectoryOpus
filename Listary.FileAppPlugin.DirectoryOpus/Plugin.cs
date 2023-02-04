@@ -35,7 +35,7 @@ namespace Listary.FileAppPlugin.DirectoryOpus
         }
     }
 
-    class DirectoryOpusWindow : IFileWindow
+    public class DirectoryOpusWindow : IFileWindow
     {
         private IFileAppPluginHost _host;
 
@@ -53,7 +53,7 @@ namespace Listary.FileAppPlugin.DirectoryOpus
         }
     }
 
-    class DirectoryOpusTab : IFileTab, IGetFolder, IOpenFolder
+    public class DirectoryOpusTab : IFileTab, IGetFolder, IOpenFolder
     {
         private IFileAppPluginHost _host;
         private DirectoryOpusWindow _parent;

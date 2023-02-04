@@ -11,10 +11,5 @@
 
   "Api": "NetFx",
   "ApiVersion": 1,
-  "Entry": "Listary.FileAppPlugin.DirectoryOpus.dll",
-  "Features": {
-    "IFileAppPlugin": [],
-    "IFileWindow": [],
-    "IFileTab": [ "IGetFolder", "IOpenFolder" ]
-  }
+  "Entry": "Listary.FileAppPlugin.DirectoryOpus.dll"
 }
