@@ -1,4 +1,5 @@
 ﻿using Listary.FileAppPlugin.DirectoryOpus;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,12 +81,12 @@ namespace Listary.FileAppPlugin.DirectoryOpus
                 }
                 else
                 {
-                    _host.Logger.Debug("Unknown focus window class");
+                    _host.Logger.LogDebug("Unknown focus window class");
                 }
             }
             else
             {
-                _host.Logger.Debug("Cannot get focus window");
+                _host.Logger.LogDebug("Cannot get focus window");
             }
             
             HWND addressBar = GetAddressBar();
@@ -95,7 +96,7 @@ namespace Listary.FileAppPlugin.DirectoryOpus
             }
             else
             {
-                _host.Logger.Error("GetAddressBar failed");
+                _host.Logger.LogError("GetAddressBar failed");
             }
 
             return default;
@@ -116,7 +117,7 @@ namespace Listary.FileAppPlugin.DirectoryOpus
             HWND dopus = PInvoke.FindWindow("DOpus.ParentWindow", "Directory Opus");
             if (dopus == default)
             {
-                _host.Logger.Error("Cannot find DOpus.ParentWindow");
+                _host.Logger.LogError("Cannot find DOpus.ParentWindow");
                 return false;
             }
             
