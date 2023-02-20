@@ -12,7 +12,7 @@ namespace Listary.FileAppPlugin.DirectoryOpus
 {
     internal static class Win32Utils
     {
-        internal static string GetClassName(HWND hWnd)
+        public static string GetClassName(HWND hWnd)
         {
             unsafe
             {
@@ -22,7 +22,7 @@ namespace Listary.FileAppPlugin.DirectoryOpus
             }
         }
 
-        internal static HWND GetFocus(HWND hWnd)
+        public static HWND GetFocus(HWND hWnd)
         {
             unsafe
             {

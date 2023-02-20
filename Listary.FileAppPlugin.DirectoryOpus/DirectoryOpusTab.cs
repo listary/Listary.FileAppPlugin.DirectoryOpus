@@ -1,5 +1,4 @@
-﻿using Listary.FileAppPlugin.DirectoryOpus;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,61 +9,17 @@ using Windows.Win32.Foundation;
 
 namespace Listary.FileAppPlugin.DirectoryOpus
 {
-    public class DirectoryOpusPlugin : IFileAppPlugin
-    {
-        private IFileAppPluginHost _host;
-
-        public bool IsSharedAcrossApplications => false;
-        public SearchBarType SearchBarType => SearchBarType.Floating;
-        public bool IsQuickSwitchTarget => false;
-
-        public async Task<bool> Initialize(IFileAppPluginHost host)
-        {
-            _host = host;
-            return true;
-        }
-
-        public void Dispose() { }
-        
-        public IFileWindow BindFileWindow(IntPtr hWnd)
-        {
-            if (Win32Utils.GetClassName(new(hWnd)) == "dopus.lister")
-            {
-                return new DirectoryOpusWindow(_host, hWnd);
-            }
-            return default;
-        }
-    }
-
-    public class DirectoryOpusWindow : IFileWindow
-    {
-        private IFileAppPluginHost _host;
-
-        public IntPtr Handle { get; }
-
-        public DirectoryOpusWindow(IFileAppPluginHost host, IntPtr hWnd)
-        {
-            _host = host;
-            Handle = hWnd;
-        }
-
-        public async Task<IFileTab> GetCurrentTab()
-        {
-            return new DirectoryOpusTab(this, _host);
-        }
-    }
-
     public class DirectoryOpusTab : IFileTab, IGetFolder, IOpenFolder
     {
         private IFileAppPluginHost _host;
         private DirectoryOpusWindow _parent;
 
-        public DirectoryOpusTab(DirectoryOpusWindow parent, IFileAppPluginHost host)
+        public DirectoryOpusTab(IFileAppPluginHost host, DirectoryOpusWindow parent)
         {
-            _parent = parent;
             _host = host;
+            _parent = parent;
         }
-        
+
         public async Task<string> GetCurrentFolder()
         {
             HWND focus = Win32Utils.GetFocus(new(_parent.Handle));
@@ -88,7 +43,7 @@ namespace Listary.FileAppPlugin.DirectoryOpus
             {
                 _host.Logger.LogDebug("Cannot get focus window");
             }
-            
+
             HWND addressBar = GetAddressBar();
             if (addressBar != default)
             {
@@ -101,7 +56,7 @@ namespace Listary.FileAppPlugin.DirectoryOpus
 
             return default;
         }
-        
+
         private HWND GetAddressBar()
         {
             HWND locationBar = Win32Utils.FindWindowExRecursively(new(_parent.Handle), default, "dopus.ctl.treepath", default);
@@ -120,7 +75,7 @@ namespace Listary.FileAppPlugin.DirectoryOpus
                 _host.Logger.LogError("Cannot find DOpus.ParentWindow");
                 return false;
             }
-            
+
             string command = $"Go \"{path}\"\0";  // with a trailing \0
             byte[] bytes = new UnicodeEncoding().GetBytes(command);
             IntPtr result = _host.SendCopyData(dopus, default, (IntPtr)0x14, bytes, (uint)bytes.Length);
